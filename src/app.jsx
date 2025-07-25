@@ -30,7 +30,7 @@ const App = () => {
     setUserData({
       email: '',
       bodyweight: '',
-      bodyweight: 'lbs',
+      bodyweightUnit: 'lbs',
       height: '',
       heightUnit: 'in',
       fitnessLevel: 5
