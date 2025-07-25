@@ -78,7 +78,7 @@ const App = () => {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Biological Sex
+                    Gender
                   </label>
                   <div className="flex space-x-4">
                     {['Male', 'Female', 'Other'].map((option) => (
@@ -206,7 +206,7 @@ const App = () => {
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Personalized Routines</h2>
                 <p className="text-gray-600">
-                  Based on your profile, here are 3 routines tailored for your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal
+                  Based on your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal, these are the three routines we have for you. CURRENTLY WORK IN PROGRESS
                 </p>
               </div>
 
