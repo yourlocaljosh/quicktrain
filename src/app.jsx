@@ -35,7 +35,7 @@ const App = () => {
   };
 
   const fitnessGoals = [
-    { id: 'basic', title: 'Basic Fitness', description: 'Improve overall health and wellness' },
+    { id: 'basic', title: 'Life Fitness', description: 'Increase life expectency, make daily tasks easier, and be fit!' },
     { id: 'strength', title: 'Strength Training', description: 'Build functional muscle strength' },
     { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition (hypertrophy)' },
     { id: 'athletic', title: 'Athletic Training', description: 'Enhance athletic performance including strength & cardio' },
@@ -43,9 +43,9 @@ const App = () => {
   ];
 
   const routines = [
-    { id: 1, name: 'Light Routine', difficulty: 'Light (30min/day)'},
-    { id: 2, name: 'Intermediate Routine', difficulty: 'Medium (1h/day)'},
-    { id: 3, name: 'Intense Routine', difficulty: 'Intense (1h/day + Proper Sleep & Nutrition)'}
+    { id: 1, name: 'Light Routine', commitment: '30 minutes a day + your current nutrition & sleep'},
+    { id: 2, name: 'Intermediate Routine', commitment: '1 hour a day + your current nutrition & sleep'},
+    { id: 3, name: 'Intense Routine', commitment: '1-2 hours a day + proper sleep & nutrition'}
   ];
 
   return (
@@ -214,7 +214,7 @@ const App = () => {
                       </div>
                       <h3 className="font-semibold text-lg text-gray-900 mb-2">{routine.name}</h3>
                       <div className="flex justify-between text-sm text-gray-600">
-                        <span>Difficulty: {routine.difficulty}</span>
+                        <span>{routine.commitment}</span>
                         <span>{routine.duration}</span>
                       </div>
                     </div>
