@@ -8,6 +8,7 @@ const App = () => {
     height: '',
     fitnessLevel: 5
   });
+  const [selectedGoal, setSelectedGoal] = useState('');
 
   const handleInputChange = (field, value) => {
     setUserData(prev => ({
@@ -16,8 +17,21 @@ const App = () => {
     }));
   };
 
+  const handleGoalSelect = (goal) => {
+    setSelectedGoal(goal);
+    setCurrentStep(3);
+  };
+
+  const fitnessGoals = [
+    { id: 'basic', title: 'Basic Fitness', description: 'Improve overall health and wellness' },
+    { id: 'strength', title: 'Strength Training', description: 'Build functional muscle strength' },
+    { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition' },
+    { id: 'athletic', title: 'Athletic Training', description: 'Enhance sports performance' },
+    { id: 'balanced', title: 'Balanced', description: 'Combination of strength, cardio, and flexibility' }
+  ];
+
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <header>
         <h1 style={{ color: '#333' }}>quicktrain</h1>
       </header>
@@ -28,9 +42,9 @@ const App = () => {
             <p>Enter your basic information</p>
             
             <div style={{ marginBottom: '20px' }}>
-              <label>Biological Sex:</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Biological Sex:</label>
               <div>
-                {['Male', 'Female'].map((option) => (
+                {['Male', 'Female', 'Other'].map((option) => (
                   <button
                     key={option}
                     onClick={() => handleInputChange('biologicalSex', option)}
@@ -50,7 +64,7 @@ const App = () => {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label>Bodyweight (kg):</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Bodyweight (kg):</label>
               <input
                 type="number"
                 value={userData.bodyweight}
@@ -60,7 +74,7 @@ const App = () => {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label>Height (cm):</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Height (cm):</label>
               <input
                 type="number"
                 value={userData.height}
@@ -70,7 +84,7 @@ const App = () => {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label>Fitness Level: {userData.fitnessLevel} hours/week</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Fitness Level: {userData.fitnessLevel} hours/week</label>
               <input
                 type="range"
                 min="0"
@@ -79,6 +93,10 @@ const App = () => {
                 onChange={(e) => handleInputChange('fitnessLevel', parseInt(e.target.value))}
                 style={{ width: '100%' }}
               />
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#666' }}>
+                <span>0 hrs</span>
+                <span>28 hrs</span>
+              </div>
             </div>
 
             <button
@@ -91,7 +109,8 @@ const App = () => {
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
-                cursor: (!userData.biologicalSex || !userData.bodyweight || !userData.height) ? 'not-allowed' : 'pointer'
+                cursor: (!userData.biologicalSex || !userData.bodyweight || !userData.height) ? 'not-allowed' : 'pointer',
+                fontWeight: 'bold'
               }}
             >
               Continue
@@ -101,8 +120,39 @@ const App = () => {
         {currentStep === 2 && (
           <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
             <h2>Step 2: Select Your Goal</h2>
-            <p>Choose your fitness objective</p>
-            <button onClick={() => setCurrentStep(1)}>Back</button>
+            <p>Choose the fitness path that matches your objectives</p>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginTop: '20px' }}>
+              {fitnessGoals.map((goal) => (
+                <button
+                  key={goal.id}
+                  onClick={() => handleGoalSelect(goal.id)}
+                  style={{
+                    padding: '20px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    backgroundColor: 'white',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => e.target.style.borderColor = '#f59e0b'}
+                  onMouseOut={(e) => e.target.style.borderColor = '#e5e7eb'}
+                >
+                  <h3 style={{ margin: '0 0 8px 0', color: '#333' }}>{goal.title}</h3>
+                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>{goal.description}</p>
+                </button>
+              ))}
+            </div>
+
+            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+              <button 
+                onClick={() => setCurrentStep(1)}
+                style={{ color: '#666', background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                ← Back to personal info
+              </button>
+            </div>
           </div>
         )}
         {currentStep === 3 && (
