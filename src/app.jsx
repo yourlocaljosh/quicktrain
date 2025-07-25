@@ -81,7 +81,7 @@ const App = () => {
                     Gender
                   </label>
                   <div className="flex space-x-4">
-                    {['Male', 'Female', 'Other'].map((option) => (
+                    {['Male', 'Female'].map((option) => (
                       <button
                         key={option}
                         onClick={() => handleInputChange('biologicalSex', option)}
