@@ -6,7 +6,9 @@ const App = () => {
   const [userData, setUserData] = useState({
     email: '',
     bodyweight: '',
+    bodyweightUnit: 'lbs',
     height: '',
+    heightUnit: 'in',
     fitnessLevel: 5
   });
   const [selectedGoal, setSelectedGoal] = useState('');
@@ -28,7 +30,9 @@ const App = () => {
     setUserData({
       email: '',
       bodyweight: '',
+      bodyweight: 'lbs',
       height: '',
+      heightUnit: 'in',
       fitnessLevel: 5
     });
     setSelectedGoal('');
@@ -74,11 +78,10 @@ const App = () => {
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Get Started</h2>
                 <p className="text-gray-600">Tell us about yourself to create your personalized routine</p>
               </div>
-
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address (Optional)
+                    Email Address (Optional to receive your routines)
                   </label>
                   <input
                     type="email"
@@ -88,37 +91,57 @@ const App = () => {
                     placeholder="Wgains@email.com"
                   />
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Bodyweight
                     </label>
-                    <input
-                      type="number"
-                      value={userData.bodyweight}
-                      onChange={(e) => handleInputChange('bodyweight', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="Enter your weight"
-                    />
+                    <div className="flex space-x-2">
+                      <input
+                        type="number"
+                        value={userData.bodyweight}
+                        onChange={(e) => handleInputChange('bodyweight', e.target.value)}
+                        className="flex-grow px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                        placeholder="Enter your weight"
+                      />
+                      <select
+                        value={userData.bodyweightUnit || 'lbs'}
+                        onChange={(e) => handleInputChange('bodyweightUnit', e.target.value)}
+                        className="px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                      >
+                        <option value="lbs">lbs</option>
+                        <option value="kg">kg</option>
+                      </select>
+                    </div>
                   </div>
-
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Height
                     </label>
-                    <input
-                      type="number"
-                      value={userData.height}
-                      onChange={(e) => handleInputChange('height', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="Enter your height"
-                    />
+                    <div className="flex space-x-2">
+                      <input
+                        type="number"
+                        value={userData.height}
+                        onChange={(e) => handleInputChange('height', e.target.value)}
+                        className="flex-grow px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                        placeholder="Enter your height"
+                      />
+                      <select
+                        value={userData.heightUnit || 'in'}
+                        onChange={(e) => handleInputChange('heightUnit', e.target.value)}
+                        className="px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                      >
+                        <option value="in">in</option>
+                        <option value="cm">cm</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Current Fitness Level: {userData.fitnessLevel} hours/week
+                    Current Fitness Level: {userData.fitnessLevel} h/week
                   </label>
                   <input
                     type="range"
@@ -133,7 +156,7 @@ const App = () => {
                     <span>28+ hours</span>
                   </div>
                 </div>
-
+                
                 <button
                   onClick={() => setCurrentStep(2)}
                   disabled={!userData.bodyweight || !userData.height}
