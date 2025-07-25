@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({
-    biologicalSex: '',
+    email: '',
     bodyweight: '',
     height: '',
     fitnessLevel: 5
@@ -26,7 +26,7 @@ const App = () => {
   const resetForm = () => {
     setCurrentStep(1);
     setUserData({
-      biologicalSex: '',
+      email: '',
       bodyweight: '',
       height: '',
       fitnessLevel: 5
@@ -37,15 +37,15 @@ const App = () => {
   const fitnessGoals = [
     { id: 'basic', title: 'Basic Fitness', description: 'Improve overall health and wellness' },
     { id: 'strength', title: 'Strength Training', description: 'Build functional muscle strength' },
-    { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition' },
-    { id: 'athletic', title: 'Athletic Training', description: 'Enhance sports performance' },
-    { id: 'balanced', title: 'Balanced', description: 'Combination of strength, cardio, and flexibility' }
+    { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition (hypertrophy)' },
+    { id: 'athletic', title: 'Athletic Training', description: 'Enhance athletic performance including strength & cardio' },
+    { id: 'balanced', title: 'Balanced', description: 'A little bit of everything' }
   ];
 
   const routines = [
-    { id: 1, name: 'Beginner Routine', difficulty: 'Easy', duration: '4 weeks' },
-    { id: 2, name: 'Intermediate Routine', difficulty: 'Medium', duration: '8 weeks' },
-    { id: 3, name: 'Advanced Routine', difficulty: 'Hard', duration: '12 weeks' }
+    { id: 1, name: 'Light Routine', difficulty: 'Light (30min/day)'},
+    { id: 2, name: 'Intermediate Routine', difficulty: 'Medium (1h/day)'},
+    { id: 3, name: 'Intense Routine', difficulty: 'Intense (1h/day + Proper Sleep & Nutrition)'}
   ];
 
   return (
@@ -78,29 +78,20 @@ const App = () => {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Gender
+                    Email Address (Optional)
                   </label>
-                  <div className="flex space-x-4">
-                    {['Male', 'Female'].map((option) => (
-                      <button
-                        key={option}
-                        onClick={() => handleInputChange('biologicalSex', option)}
-                        className={`px-6 py-3 rounded-lg border-2 transition-all duration-200 ${
-                          userData.biologicalSex === option
-                            ? 'border-amber-500 bg-amber-50 text-amber-700'
-                            : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
+                  <input
+                    type="email"
+                    value={userData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    placeholder="Wgains@email.com"
+                  />
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Bodyweight (kg)
+                      Bodyweight
                     </label>
                     <input
                       type="number"
@@ -113,7 +104,7 @@ const App = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Height (cm)
+                      Height
                     </label>
                     <input
                       type="number"
@@ -138,14 +129,14 @@ const App = () => {
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                   />
                   <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>0 hrs</span>
-                    <span>28 hrs</span>
+                    <span>0 hours</span>
+                    <span>28+ hours</span>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setCurrentStep(2)}
-                  disabled={!userData.biologicalSex || !userData.bodyweight || !userData.height}
+                  disabled={!userData.bodyweight || !userData.height}
                   className="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-gray-300 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
                 >
                   Continue
