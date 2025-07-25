@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,7 +20,7 @@ const App = () => {
 
   const handleGoalSelect = (goal) => {
     setSelectedGoal(goal);
-    setCurrentStep(3);
+    setTimeout(() => setCurrentStep(3), 300);
   };
 
   const resetForm = () => {
@@ -48,192 +49,224 @@ const App = () => {
   ];
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <header>
-        <h1 style={{ color: '#333' }}>quicktrain</h1>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <h1 className="text-2xl font-bold text-gray-900">
+            <span className="text-gray-900">quick</span>
+            <span className="text-amber-500">train</span>
+          </h1>
+        </div>
       </header>
-      <main>
-        {currentStep === 1 && (
-          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <h2>Step 1: Personal Information</h2>
-              <p style={{ color: '#666' }}>Enter your basic information</p>
-            </div>
-            
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>Biological Sex:</label>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                {['Male', 'Female', 'Other'].map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleInputChange('biologicalSex', option)}
-                    style={{
-                      padding: '12px 20px',
-                      border: userData.biologicalSex === option ? '2px solid #f59e0b' : '1px solid #ccc',
-                      backgroundColor: userData.biologicalSex === option ? '#fffbeb' : 'white',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                      fontWeight: userData.biologicalSex === option ? 'bold' : 'normal'
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-              <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>Bodyweight (kg):</label>
-                <input
-                  type="number"
-                  value={userData.bodyweight}
-                  onChange={(e) => handleInputChange('bodyweight', e.target.value)}
-                  style={{ width: '100%', padding: '12px', border: '1px solid #ccc', borderRadius: '6px' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>Height (cm):</label>
-                <input
-                  type="number"
-                  value={userData.height}
-                  onChange={(e) => handleInputChange('height', e.target.value)}
-                  style={{ width: '100%', padding: '12px', border: '1px solid #ccc', borderRadius: '6px' }}
-                />
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '25px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>Fitness Level: {userData.fitnessLevel} hours/week</label>
-              <input
-                type="range"
-                min="0"
-                max="28"
-                value={userData.fitnessLevel}
-                onChange={(e) => handleInputChange('fitnessLevel', parseInt(e.target.value))}
-                style={{ width: '100%' }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#666', marginTop: '5px' }}>
-                <span>0 hrs</span>
-                <span>28 hrs</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setCurrentStep(2)}
-              disabled={!userData.biologicalSex || !userData.bodyweight || !userData.height}
-              style={{
-                width: '100%',
-                padding: '14px',
-                backgroundColor: (!userData.biologicalSex || !userData.bodyweight || !userData.height) ? '#ccc' : '#f59e0b',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: (!userData.biologicalSex || !userData.bodyweight || !userData.height) ? 'not-allowed' : 'pointer',
-                fontWeight: 'bold',
-                fontSize: '16px'
-              }}
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        <AnimatePresence mode="wait">
+          {currentStep === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg p-8"
             >
-              Continue
-            </button>
-          </div>
-        )}
-        {currentStep === 2 && (
-          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <h2>Step 2: Select Your Goal</h2>
-              <p style={{ color: '#666' }}>Choose the fitness path that matches your objectives</p>
-            </div>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginTop: '20px' }}>
-              {fitnessGoals.map((goal) => (
-                <button
-                  key={goal.id}
-                  onClick={() => handleGoalSelect(goal.id)}
-                  style={{
-                    padding: '20px',
-                    border: '2px solid #e5e7eb',
-                    borderRadius: '8px',
-                    backgroundColor: 'white',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseOver={(e) => e.target.style.borderColor = '#f59e0b'}
-                  onMouseOut={(e) => e.target.style.borderColor = '#e5e7eb'}
-                >
-                  <h3 style={{ margin: '0 0 8px 0', color: '#333' }}>{goal.title}</h3>
-                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>{goal.description}</p>
-                </button>
-              ))}
-            </div>
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Get Started</h2>
+                <p className="text-gray-600">Tell us about yourself to create your personalized routine</p>
+              </div>
 
-            <div style={{ marginTop: '20px', textAlign: 'center' }}>
-              <button 
-                onClick={() => setCurrentStep(1)}
-                style={{ color: '#666', background: 'none', border: 'none', cursor: 'pointer' }}
-              >
-                ← Back to personal info
-              </button>
-            </div>
-          </div>
-        )}
-        {currentStep === 3 && (
-          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <h2>Your Personalized Routines</h2>
-              <p style={{ color: '#666' }}>
-                Based on your profile, here are 3 routines tailored for your <span style={{ fontWeight: 'bold', color: '#f59e0b' }}>{selectedGoal}</span> goal
-              </p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-              {routines.map((routine) => (
-                <div
-                  key={routine.id}
-                  style={{
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                    padding: '20px',
-                    textAlign: 'center',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  <div style={{ width: '60px', height: '60px', backgroundColor: '#fffbeb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px' }}>
-                    <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#f59e0b' }}>{routine.id}</span>
-                  </div>
-                  <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>{routine.name}</h3>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#666' }}>
-                    <span>Difficulty: {routine.difficulty}</span>
-                    <span>{routine.duration}</span>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Biological Sex
+                  </label>
+                  <div className="flex space-x-4">
+                    {['Male', 'Female', 'Other'].map((option) => (
+                      <button
+                        key={option}
+                        onClick={() => handleInputChange('biologicalSex', option)}
+                        className={`px-6 py-3 rounded-lg border-2 transition-all duration-200 ${
+                          userData.biologicalSex === option
+                            ? 'border-amber-500 bg-amber-50 text-amber-700'
+                            : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                        }`}
+                      >
+                        {option}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
 
-            <div style={{ textAlign: 'center' }}>
-              <button
-                onClick={resetForm}
-                style={{
-                  padding: '12px 24px',
-                  backgroundColor: '#f59e0b',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold'
-                }}
-              >
-                Generate New Routines
-              </button>
-              <p style={{ color: '#999', fontSize: '14px', marginTop: '10px' }}>
-                These routines are customized based on your biometrics and fitness goals
-              </p>
-            </div>
-          </div>
-        )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Bodyweight (kg)
+                    </label>
+                    <input
+                      type="number"
+                      value={userData.bodyweight}
+                      onChange={(e) => handleInputChange('bodyweight', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      placeholder="Enter your weight"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Height (cm)
+                    </label>
+                    <input
+                      type="number"
+                      value={userData.height}
+                      onChange={(e) => handleInputChange('height', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      placeholder="Enter your height"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Current Fitness Level: {userData.fitnessLevel} hours/week
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="28"
+                    value={userData.fitnessLevel}
+                    onChange={(e) => handleInputChange('fitnessLevel', parseInt(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>0 hrs</span>
+                    <span>28 hrs</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setCurrentStep(2)}
+                  disabled={!userData.biologicalSex || !userData.bodyweight || !userData.height}
+                  className="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-gray-300 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
+                >
+                  Continue
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg p-8"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Select Your Goal</h2>
+                <p className="text-gray-600">Choose the fitness path that matches your objectives</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {fitnessGoals.map((goal) => (
+                  <motion.button
+                    key={goal.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleGoalSelect(goal.id)}
+                    className="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-300 hover:bg-amber-50 transition-all duration-200 text-left"
+                  >
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2">{goal.title}</h3>
+                    <p className="text-gray-600 text-sm">{goal.description}</p>
+                  </motion.button>
+                ))}
+              </div>
+
+              <div className="mt-8 text-center">
+                <button
+                  onClick={() => setCurrentStep(1)}
+                  className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                >
+                  ← Back to personal info
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === 3 && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg p-8"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Personalized Routines</h2>
+                <p className="text-gray-600">
+                  Based on your profile, here are 3 routines tailored for your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {routines.map((routine) => (
+                  <motion.div
+                    key={routine.id}
+                    whileHover={{ y: -5 }}
+                    className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-200"
+                  >
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl font-bold text-amber-600">{routine.id}</span>
+                      </div>
+                      <h3 className="font-semibold text-lg text-gray-900 mb-2">{routine.name}</h3>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>Difficulty: {routine.difficulty}</span>
+                        <span>{routine.duration}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="text-center space-y-4">
+                <button
+                  onClick={resetForm}
+                  className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200"
+                >
+                  Generate New Routines
+                </button>
+                <p className="text-gray-500 text-sm">
+                  These routines are customized based on your biometrics and fitness goals
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
+
+      <style jsx>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          background: #f59e0b;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .slider::-moz-range-thumb {
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          background: #f59e0b;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+      `}</style>
     </div>
   );
 };
