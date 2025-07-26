@@ -6,4 +6,4 @@ A personalized fitness routine generator that creates comprehensive workout plan
 - Encyclopedia featuring our favorite exercises for EVERY muscle group
 - sleek :p
 
-made with React, Motion, Tailwind CSS, Vite
+A project made by Josh with React, Motion, Tailwind CSS, Vite
