@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app.jsx';
-import Encyclopedia from './encyclopedia.jsx';
-import About from './about.jsx';
+import App from './App.jsx';
+import Encyclopedia from './Encyclopedia.jsx';
+import About from './About.jsx';
 import './index.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
