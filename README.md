@@ -1,9 +1,5 @@
 # quicktrain
 A personalized fitness routine generator that creates comprehensive workout plans based on your biometrics and goals.
-
-## feature list 
-- Personalized fitness routines based on individual
-- Encyclopedia featuring our favorite exercises for EVERY muscle group
-- Sleek :p
+The website also features a guide on exercises to target EVERY muscle group.
 
 A project made by Josh with React, Motion, Tailwind CSS, Vite
