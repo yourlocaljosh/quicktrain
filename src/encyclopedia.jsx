@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Header from './header';
+import { getFavoriteExercisesForMuscle } from './data/exercises';
+
+const favoriteExercises = getFavoriteExercisesForMuscle(selectedMuscleGroup.id);
 
 const muscleGroups = [
   { id: 'chest', name: 'Chest' },

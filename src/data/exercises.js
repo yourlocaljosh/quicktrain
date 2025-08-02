@@ -1,4 +1,4 @@
-const chestExercises = [
+const allExercisesList = [
   {
     id: 'bench_press',
     name: 'Bench Press',
@@ -6,10 +6,8 @@ const chestExercises = [
     secondaryMuscles: ['triceps', 'delts'],
     equipment: ['Barbell', 'Bench'],
     description: 'The most iconic gym exercise.',
+    favorites: ['chest']
   },
-];
-
-const backExercises = [
   {
     id: 'pull_up',
     name: 'Pull-Up',
@@ -17,21 +15,26 @@ const backExercises = [
     secondaryMuscles: ['biceps', 'delts'],
     equipment: ['Pull-Up Bar'],
     description: 'A classic bodyweight exercise for the back and arms.',
+    favorites: ['lats']
   },
 ];
 
-
-export const exercisesByMuscleGroup = {
-  chest: chestExercises,
-  back: backExercises,
-};
-
-export const allExercises = [
-  ...chestExercises,
-  ...backExercises,
-];
-
-export const exerciseMap = allExercises.reduce((map, exercise) => {
+export const exerciseMap = allExercisesList.reduce((map, exercise) => {
   map[exercise.id] = exercise;
   return map;
 }, {});
+
+export const getFavoriteExercisesForMuscle = (muscleGroupId) => {
+  return allExercisesList.filter(exercise => 
+    exercise.favorites && exercise.favorites.includes(muscleGroupId)
+  );
+};
+
+export const allExercises = allExercisesList;
+
+export const getAllExercisesForMuscle = (muscleName) => {
+  return allExercisesList.filter(exercise => 
+    exercise.primaryMuscles.includes(muscleName) || 
+    exercise.secondaryMuscles.includes(muscleName)
+  );
+};

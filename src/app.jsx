@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Header from './header';
+import { routineTemplates } from './data/routines';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
