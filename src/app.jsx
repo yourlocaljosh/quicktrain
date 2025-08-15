@@ -74,12 +74,12 @@ const App = () => {
             >
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Get Started</h2>
-                <p className="text-gray-600">Tell us about yourself to create your personalized routine</p>
+                <p className="text-gray-600">Tell us about yourself to create your personalized routine (Website is incomplete. Expect routines soon)</p>
               </div>
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address (Optional to receive your routines)
+                    Email Address (Optional)
                   </label>
                   <input
                     type="email"
