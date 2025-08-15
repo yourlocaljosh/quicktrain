@@ -52,9 +52,9 @@ const App = () => {
   ];
 
   const routines = [
-    { id: 1, name: 'Light Routine', commitment: '30 minutes a day + your current nutrition & sleep'},
-    { id: 2, name: 'Intermediate Routine', commitment: '1 hour a day + your current nutrition & sleep'},
-    { id: 3, name: 'Intense Routine', commitment: '1-2 hours a day + proper sleep & nutrition'}
+    { id: 1, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'},
+    { id: 2, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'},
+    { id: 3, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'}
   ];
 
   return (
