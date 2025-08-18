@@ -3,20 +3,23 @@ import Header from './header';
 import { getFavoriteExercisesForMuscle } from './data/exercises';
 
 const muscleGroups = [
+  { id: 'upper_chest', name: 'Upper Chest' },
   { id: 'chest', name: 'Chest' },
   { id: 'triceps', name: 'Triceps' },
   { id: 'biceps', name: 'Biceps' },
+  { id: 'forearms', name: 'Biceps' },
   { id: 'abs', name: 'Abdominal' },
   { id: 'traps', name: 'Traps' },
   { id: 'lats', name: 'Lats' },
   { id: 'upper_back', name: 'Upper Back' },
   { id: 'lower_back', name: 'Lower Back' },
   { id: 'front_delt', name: 'Front Delt' },
-  { id: 'middle_delt', name: 'Front Delt' },
-  { id: 'rear_delt', name: 'Front Delt' },
+  { id: 'middle_delt', name: 'Middle Delt' },
+  { id: 'rear_delt', name: 'Rear Delt' },
   { id: 'quads', name: 'Quadriceps' },
   { id: 'hamstrings', name: 'Hamstrings' },
   { id: 'calves', name: 'Calves' },
+  { id: 'glutes', name: 'Glutes' },
 ];
 
 const Encyclopedia = () => {
