@@ -3,7 +3,7 @@ const allExercisesList = [
     id: 'bench_press',
     name: 'Bench Press',
     primaryMuscles: ['chest'],
-    secondaryMuscles: ['triceps', 'delts'],
+    secondaryMuscles: ['triceps', 'front_delt'],
     equipment: ['Barbell', 'Bench'],
     description: 'The most iconic gym exercise.',
     favorites: ['chest']
@@ -12,7 +12,16 @@ const allExercisesList = [
     id: 'pull_up',
     name: 'Pull-Up',
     primaryMuscles: ['lats'],
-    secondaryMuscles: ['biceps', 'delts'],
+    secondaryMuscles: ['biceps', 'rear_delt'],
+    equipment: ['Pull-Up Bar'],
+    description: 'A classic bodyweight exercise for the back and arms.',
+    favorites: ['lats']
+  },
+  {
+    id: 'push-up',
+    name: 'Push-up',
+    primaryMuscles: ['chest'],
+    secondaryMuscles: ['triceps','front_delt'],
     equipment: ['Pull-Up Bar'],
     description: 'A classic bodyweight exercise for the back and arms.',
     favorites: ['lats']

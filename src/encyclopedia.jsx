@@ -1,4 +1,3 @@
-// src/Encyclopedia.jsx
 import React, { useState } from 'react';
 import Header from './header';
 import { getFavoriteExercisesForMuscle } from './data/exercises';
@@ -12,7 +11,9 @@ const muscleGroups = [
   { id: 'lats', name: 'Lats' },
   { id: 'upper_back', name: 'Upper Back' },
   { id: 'lower_back', name: 'Lower Back' },
-  { id: 'delts', name: 'Delts' },
+  { id: 'front_delt', name: 'Front Delt' },
+  { id: 'middle_delt', name: 'Front Delt' },
+  { id: 'rear_delt', name: 'Front Delt' },
   { id: 'quads', name: 'Quadriceps' },
   { id: 'hamstrings', name: 'Hamstrings' },
   { id: 'calves', name: 'Calves' },
