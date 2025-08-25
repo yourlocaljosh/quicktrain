@@ -11,6 +11,8 @@ const App = () => {
     bodyweight: '',
     bodyweightUnit: 'lbs',
     height: '',
+    heightFeet: '',
+    heightInches: '',
     heightUnit: 'in',
     fitnessLevel: 5
   });
@@ -37,6 +39,8 @@ const App = () => {
       bodyweight: '',
       bodyweightUnit: 'lbs',
       height: '',
+      heightFeet: '',
+      heightInches: '',
       heightUnit: 'in',
       fitnessLevel: 5
     });
@@ -92,43 +96,67 @@ const App = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2 px-1">
                       Bodyweight
                     </label>
-                    <div className="flex space-x-2">
-                      <input
-                        type="number"
-                        value={userData.bodyweight}
-                        onChange={(e) => handleInputChange('bodyweight', e.target.value)}
-                        className="flex-grow px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                        placeholder="Enter your weight"
-                      />
+                    <div className="flex space-x-2 px-1">
+                      <div className="flex-grow flex items-center space-x-1">
+                        <input
+                          type="number"
+                          value={userData.bodyweight}
+                          onChange={(e) => handleInputChange('bodyweight', e.target.value)}
+                          className="flex-grow max-w-full px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                          placeholder="Enter your weight"
+                        />
+                      </div>
                       <select
                         value={userData.bodyweightUnit || 'lbs'}
                         onChange={(e) => handleInputChange('bodyweightUnit', e.target.value)}
-                        className="px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                        className="w-24 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white flex-shrink-0"
                       >
                         <option value="lbs">lbs</option>
                         <option value="kg">kg</option>
                       </select>
                     </div>
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Height
                     </label>
-                    <div className="flex space-x-2">
-                      <input
-                        type="number"
-                        value={userData.height}
-                        onChange={(e) => handleInputChange('height', e.target.value)}
-                        className="flex-grow px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                        placeholder="Enter your height"
-                      />
+                    <div className="grid grid-cols-[1fr_auto] gap-2">
+                      <div className="flex space-x-3">
+                        {userData.heightUnit === 'in' ? (
+                          <>
+                            <input
+                              type="number"
+                              value={userData.heightFeet || ''}
+                              onChange={(e) => handleInputChange('heightFeet', e.target.value)}
+                              className="w-32 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                              placeholder="Enter"
+                            />
+                            <input
+                              type="number"
+                              value={userData.heightInches || ''}
+                              onChange={(e) => handleInputChange('heightInches', e.target.value)}
+                              className="w-36 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                              placeholder="height"
+                            />
+                          </>
+                        ) : (
+                          <input
+                            type="number"
+                            value={userData.height}
+                            onChange={(e) => handleInputChange('height', e.target.value)}
+                            className="flex-grow min-w-0 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Enter height"
+                          />
+                        )}
+                      </div>
                       <select
                         value={userData.heightUnit || 'in'}
                         onChange={(e) => handleInputChange('heightUnit', e.target.value)}
-                        className="px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                        className="w-24 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
                       >
                         <option value="in">in</option>
                         <option value="cm">cm</option>
@@ -157,7 +185,12 @@ const App = () => {
                 
                 <button
                   onClick={() => setCurrentStep(2)}
-                  disabled={!userData.bodyweight || !userData.height}
+                  disabled={
+                    !userData.bodyweight ||
+                    (userData.heightUnit === 'in'
+                      ? (!userData.heightFeet && !userData.heightInches) // Require at least one of feet or inches if unit is 'in'
+                      : !userData.height) // Require height if unit is 'cm'
+                  }
                   className="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-gray-300 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
                 >
                   Continue
