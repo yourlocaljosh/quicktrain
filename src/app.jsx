@@ -133,14 +133,14 @@ const App = () => {
                               value={userData.heightFeet || ''}
                               onChange={(e) => handleInputChange('heightFeet', e.target.value)}
                               className="w-32 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                              placeholder="Enter"
+                              placeholder="Enter ft"
                             />
                             <input
                               type="number"
                               value={userData.heightInches || ''}
                               onChange={(e) => handleInputChange('heightInches', e.target.value)}
                               className="w-36 px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                              placeholder="height"
+                              placeholder="Enter in"
                             />
                           </>
                         ) : (
