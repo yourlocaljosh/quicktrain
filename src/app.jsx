@@ -52,7 +52,8 @@ const App = () => {
     { id: 'strength', title: 'Strength Training', description: 'Build functional muscle strength' },
     { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition (hypertrophy)' },
     { id: 'athletic', title: 'Athletic Training', description: 'Enhance athletic performance including strength & cardio' },
-    { id: 'balanced', title: 'Balanced', description: 'A little bit of everything' }
+    { id: 'balanced', title: 'Balanced', description: 'A little bit of everything' },
+    { id: 'weightloss', title: 'Weight Loss', description: 'Lose fat and get leaner fast' }
   ];
 
   const routines = [
