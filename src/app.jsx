@@ -57,9 +57,13 @@ const App = () => {
   ];
 
   const routines = [
-    { id: 1, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'},
-    { id: 2, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'},
-    { id: 3, name: 'Routines Coming Soon', commitment: 'Thank you for using quicktrain. Routines will be imported soon!'}
+    { id: 1, name: 'Full Body', commitment: '2 days a week, 60-70 minutes each'},
+    { id: 2, name: 'Upper Lower', commitment: '4 days a week, 60-70 minutes each'},
+    { id: 3, name: 'Push Pull Legs', commitment: '6 days a week, 60-70 minutes each'},
+    { id: 4, name: 'Full Body', commitment: '3 days a week, 60-70 minutes each'},
+    { id: 5, name: 'Upper Lower', commitment: '6 days a week, 45-60 minutes each'},
+    { id: 6, name: 'Push Pull Legs Upper Lower', commitment: '5 days a week, 60-70 minutes each'},
+    { id: 7, name: 'Full Body', commitment: '1 day a week, 60 minutes each'},
   ];
 
   return (
