@@ -6,6 +6,7 @@ import { routineTemplates } from './data/routines';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedRoutine, setSelectedRoutine] = useState(null);
   const [userData, setUserData] = useState({
     email: '',
     bodyweight: '',
@@ -54,16 +55,6 @@ const App = () => {
     { id: 'athletic', title: 'Athletic Training', description: 'Enhance athletic performance including strength & cardio' },
     { id: 'balanced', title: 'Balanced', description: 'A little bit of everything' },
     { id: 'weightloss', title: 'Weight Loss', description: 'Lose fat and get leaner fast' }
-  ];
-
-  const routines = [
-    { id: 1, name: 'Full Body', commitment: '2 days a week, 60-70 minutes each'},
-    { id: 2, name: 'Upper Lower', commitment: '4 days a week, 60-70 minutes each'},
-    { id: 3, name: 'Push Pull Legs', commitment: '6 days a week, 60-70 minutes each'},
-    { id: 4, name: 'Full Body', commitment: '3 days a week, 60-70 minutes each'},
-    { id: 5, name: 'Upper Lower', commitment: '6 days a week, 45-60 minutes each'},
-    { id: 6, name: 'Push Pull Legs Upper Lower', commitment: '5 days a week, 60-70 minutes each'},
-    { id: 7, name: 'Full Body', commitment: '1 day a week, 60 minutes each'},
   ];
 
   return (
@@ -256,12 +247,12 @@ const App = () => {
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Personalized Routines</h2>
                 <p className="text-gray-600">
-                  Based on your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal, these are the three routines we have for you. CURRENTLY WORK IN PROGRESS
+                  Based on your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal, these are the three routines we have for you.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {routines.map((routine) => (
+                {routineTemplates.map((routine) => (
                   <motion.div
                     key={routine.id}
                     whileHover={{ y: -5 }}
@@ -272,14 +263,40 @@ const App = () => {
                         <span className="text-2xl font-bold text-amber-600">{routine.id}</span>
                       </div>
                       <h3 className="font-semibold text-lg text-gray-900 mb-2">{routine.name}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{routine.description}</p>
                       <div className="flex justify-between text-sm text-gray-600">
                         <span>{routine.commitment}</span>
                         <span>{routine.duration}</span>
                       </div>
+                      <button
+                        className="mt-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-200"
+                        onClick={() => setSelectedRoutine(routine)}
+                      >
+                        View Details
+                      </button>
                     </div>
                   </motion.div>
                 ))}
               </div>
+
+              {selectedRoutine && (
+                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                  <div className="bg-white rounded-xl p-8 max-w-lg w-full shadow-lg relative">
+                    <button
+                      className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                      onClick={() => setSelectedRoutine(null)}
+                    >
+                      ✕
+                    </button>
+                    <h2 className="text-2xl font-bold mb-4">{selectedRoutine.name}</h2>
+                    <p className="mb-2">{selectedRoutine.description}</p>
+                    <div>
+                      <strong>Frequency:</strong> {selectedRoutine.frequency}<br />
+                      <strong>Split:</strong> {selectedRoutine.split}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="text-center space-y-4">
                 <button
