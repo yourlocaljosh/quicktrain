@@ -162,6 +162,35 @@ const App = () => {
     calorieSuggestions = getCalorieSuggestions(tdee, selectedGoal);
   }
 
+  let routinesToShow = [];
+  if(userData.fitnessLevel){
+    // minimum is half of the user's selected time rounded up
+    let minTime = Math.ceil(userData.fitnessLevel / 2);
+
+    // first step: filter routines that fit within the time range
+    let eligible = routineTemplates.filter(
+      r => r.time <= userData.fitnessLevel && r.time >= minTime
+    );
+
+    // second step: match routines with exact time selected
+    let exact = eligible.filter(r => r.time === userData.fitnessLevel);
+
+    for(let i = 0; i < exact.length && routinesToShow.length < 3; i++){
+      routinesToShow.push(exact[i]);
+    }
+
+    // third step: add closest times below the selected time
+    if(routinesToShow.length < 3){
+      // remove already added routines
+      let remaining = eligible.filter(r => !routinesToShow.includes(r));
+      // sort by time descending, alphabetical for same time
+      remaining.sort((a, b) => b.time - a.time);
+      for(let i = 0; i < remaining.length && routinesToShow.length < 3; i++){
+        routinesToShow.push(remaining[i]);
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -392,7 +421,7 @@ const App = () => {
                 </div>
               )}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {routineTemplates.map((routine) => (
+                {routinesToShow.map((routine) => (
                   <motion.div
                     key={routine.id}
                     whileHover={{ y: -5 }}
@@ -444,20 +473,6 @@ const App = () => {
               transition={{ duration: 0.5 }}
               className="bg-white rounded-2xl shadow-lg p-8"
             >
-              {bmi && (
-                <div className="mb-6 p-4 bg-amber-50 rounded-lg text-gray-800">
-                  <div><strong>BMI:</strong> {bmi.toFixed(1)}</div>
-                  <div className="mt-2"><strong>Suggested Caloric Intake:</strong></div>
-                  <ul className="list-disc list-inside">
-                    {calorieSuggestions.map((s, idx) => (
-                      <li key={idx}>
-                        {s.label.replace('lbs', userData.bodyweightUnit === 'kg' ? 'kg' : 'lbs')}:
-                        <span className="font-semibold"> {s.value} kcal/day</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedRoutine.name}</h2>
                 <p className="text-gray-600 mb-2">{selectedRoutine.description}</p>
