@@ -23,7 +23,8 @@ const allExercisesList = [
     primaryMuscles: ['chest'],
     secondaryMuscles: ['triceps','front_delt'],
     equipment: ['None'],
-    description: 'Ever do these at 3 AM during middle school?'
+    description: 'You can\'t go wrong with these. Convenient, reliable.',
+    favorites: ['chest','upper_chest']
   },
   {
     id: 'incline_bench_press',
@@ -57,7 +58,7 @@ const allExercisesList = [
     secondaryMuscles: ['upper_chest','triceps'],
     equipment: ['Dip Bar'],
     description: 'Great bodyweight exercise for chest & triceps.',
-    favorites: ['upper_chest']
+    favorites: ['upper_chest','chest']
   },
   {
     id: 'cable_lateral_raise',
@@ -147,8 +148,66 @@ const allExercisesList = [
     name: 'Cable Chest Fly',
     primaryMuscles: ['chest'],
     equipment: ['Cable Machine'],
-    description: 'An amazing chest exercise. Feel that stretch!',
+    description: 'An amazing chest exercise, especially when you slow down. Feel that stretch!',
     favorites: ['chest']
+  },
+  {
+    id: 'skullcrusher',
+    name: 'Skullcrushers',
+    primaryMuscles: ['triceps'],
+    equipment: ['Bench'],
+    description: 'Do not actually crush your skull. Movement should be above your head.',
+    favorites: ['triceps']
+  },
+  {
+    id: 'dumbbell_wrist_curls',
+    name: 'Dumbbell Wrist Curls',
+    primaryMuscles: ['forearms'],
+    equipment: ['Dumbbell'],
+    description: 'Slow, controlled movement for best results.',
+    favorites: ['forearms']
+  },
+  {
+    id: 'reverse_curls',
+    name: 'Reverse Curls',
+    primaryMuscles: ['forearms'],
+    equipment: ['Dumbbell', 'Barbell'],
+    description: 'Dumbbell or barbell. Keep wrists straight and focus on controlled movement.',
+    favorites: ['forearms']
+  },
+  {
+    id: 'cable_crunch',
+    name: 'Cable Crunch',
+    primaryMuscles: ['abs'],
+    equipment: ['Cable Machine'],
+    description: 'You look a bit weird doing this but it is worth it.',
+    favorites: ['abs']
+  },
+  {
+    id: 'leg_raise',
+    name: 'Leg Raise',
+    primaryMuscles: ['abs'],
+    equipment: ['None'],
+    description: 'You can do these anywhere. Great exercise.',
+    favorites: ['abs']
+  },
+  {
+    id: 'hanging_leg_raise',
+    name: 'Hanging Leg Raise',
+    primaryMuscles: ['abs'],
+    secondaryMuscles: ['obliques'],
+    equipment: ['Pull-Up Bar'],
+    description: 'Trains your grip strength and your abs. Try not to swing.',
+    favorites: ['abs']
+  },
+  {
+    id: 'side_plank',
+    name: 'Side Plank',
+    primaryMuscles: ['obliques'],
+    secondaryMuscles: ['abs'],
+    equipment: ['None'],
+    description: 'Straighten out your body and hold. Great for stability too.',
+    favorites: ['obliques']
   },
 ];
 

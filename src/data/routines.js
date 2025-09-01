@@ -2,11 +2,11 @@ import { exerciseMap } from './exercises';
 
 export const routineTemplates = [
   {
-    id: 'fullbody3',
+    id: 'FB3',
     name: 'Full Body',
     description: 'Low time in the gym for full gains.',
     frequency: '3 days/week',
-    split: 'Full Body',
+    split: 'FB Rest Repeat',
     workouts: [
       {
         day: 1,
@@ -29,7 +29,7 @@ export const routineTemplates = [
     ]
   },
   {
-    id: 'ppl',
+    id: 'PPL',
     name: 'Push / Pull / Legs',
     description: 'Focuses every muscle group for maximum gains over 6 days',
     frequency: '6 days/week',
