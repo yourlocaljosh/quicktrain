@@ -74,11 +74,16 @@ const Encyclopedia = () => {
                             <div className="flex flex-col justify-between">
                               <h4 className="font-medium text-gray-800">{exercise.name}</h4>
                               <p className="text-sm text-gray-600 max-w-md">{exercise.description}</p>
-                              <div className="flex justify-start items-center mt-2">
-                                {exercise.equipment && exercise.equipment.length > 0 && (
-                                  <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">
-                                    {exercise.equipment[0]}
-                                  </span>
+                              <div className="flex justify-start items-center mt-2 flex-wrap gap-1">
+                              {exercise.equipment && exercise.equipment.length > 0 && (
+                                  exercise.equipment.map((item, index) => (
+                                    <span 
+                                      key={index}
+                                      className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded whitespace-nowrap"
+                                    >
+                                      {item}
+                                    </span>
+                                  ))
                                 )}
                               </div>
                             </div>
