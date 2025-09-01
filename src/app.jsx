@@ -9,7 +9,7 @@ const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedRoutine, setSelectedRoutine] = useState(null);
   const [userData, setUserData] = useState({
-    email: '',
+    gender: '',
     bodyweight: '',
     bodyweightUnit: 'lbs',
     height: '',
@@ -21,6 +21,10 @@ const App = () => {
   const [selectedGoal, setSelectedGoal] = useState('');
 
   const navigate = useNavigate();
+
+  const filteredRoutines = routineTemplates.filter(
+    (routine) => routine.time <= userData.fitnessLevel
+  );
 
   const handleInputChange = (field, value) => {
     setUserData(prev => ({
@@ -37,7 +41,7 @@ const App = () => {
   const resetForm = () => {
     setCurrentStep(1);
     setUserData({
-      email: '',
+      gender: '',
       bodyweight: '',
       bodyweightUnit: 'lbs',
       height: '',
@@ -56,9 +60,107 @@ const App = () => {
     
   ];
 
-  const disclaimers = [
-    { id: 'underweight', text: 'Ease into the workouts, do not push yourself too hard for the first few weeks.'}
-  ]
+  function calculateBMI(weight, height, weightUnit, heightUnit) {
+    let w = parseFloat(weight);
+    let hMeters = 0;
+
+    if(weightUnit === 'lbs'){
+      w = w * 0.453592;
+    }
+
+    if(typeof height === 'object'){
+      const feet = parseFloat(height.feet) || 0;
+      const inches = parseFloat(height.inches) || 0;
+      hMeters = (feet * 12 + inches) * 0.0254;
+    }else{
+      if(heightUnit === 'cm'){
+        hMeters = height / 100;
+      }else{
+        hMeters = height * 0.0254;
+      }
+    }
+
+    if(!w || !hMeters){
+      return null;
+    }
+    return w / (hMeters * hMeters);
+  }
+
+  function calculateTDEE(weight, height, unit, gender = 'male', activityMultiplier = 1.55) {
+    let w = parseFloat(weight);
+    let h = parseFloat(height);
+    const age = 25;
+    let genderConstant = gender === 'female' ? -161 : 5;
+
+    if(unit === 'lbs'){
+      w = w * 0.453592;
+    }
+
+    if(h < 100){
+      h = h * 2.54;
+    }
+
+    const tdee = 10 * w + 6.25 * h - 5 * age + genderConstant;
+    return Math.round(tdee * activityMultiplier);
+  }
+
+  function getCalorieSuggestions(tdee, goal) {
+    if(goal === 'bulk'){
+      return [
+        { label: 'Gain 0.5 lbs/week', value: tdee + 250 },
+        { label: 'Gain 1.0 lbs/week', value: tdee + 500 }
+      ];
+    }
+    if(goal === 'cut'){
+      return [
+        { label: 'Lose 0.5 lbs/week', value: tdee - 250 },
+        { label: 'Lose 1.0 lbs/week', value: tdee - 500 }
+      ];
+    }
+    return [
+      { label: 'Maintain weight', value: tdee }
+    ];
+  }
+
+  let bmi = null, tdee = null, calorieSuggestions = [];
+  if(userData.bodyweight &&
+    ((userData.height && userData.heightUnit === 'cm') 
+    || (userData.heightFeet && userData.heightUnit === 'in'))
+  ){
+    let heightValue;
+    if(userData.heightUnit === 'cm'){
+      heightValue = userData.height;
+    }else{
+      heightValue = { feet: userData.heightFeet, inches: userData.heightInches };
+    }
+    bmi = calculateBMI(userData.bodyweight, heightValue, userData.bodyweightUnit, userData.heightUnit);
+
+    let heightForTDEE;
+    if(userData.heightUnit === 'cm'){
+      heightForTDEE = userData.height;
+    }else{
+      heightForTDEE = (parseInt(userData.heightFeet || 0) * 12 + parseInt(userData.heightInches || 0));
+    }
+
+    let genderForTDEE;
+    if(userData.gender === 'male' 
+      || userData.gender === 'female'){
+      genderForTDEE = userData.gender;
+    }else{
+      genderForTDEE = 'male';
+    }
+
+    const activityMultiplier = 1.55;
+
+    tdee = calculateTDEE(
+      userData.bodyweight,
+      heightForTDEE,
+      userData.bodyweightUnit,
+      genderForTDEE,
+      activityMultiplier
+    );
+    calorieSuggestions = getCalorieSuggestions(tdee, selectedGoal);
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -82,15 +184,31 @@ const App = () => {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address (Optional)
+                    Gender
                   </label>
-                  <input
-                    type="email"
-                    value={userData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    placeholder="Wgains@email.com"
-                  />
+                  <div className="flex space-x-4">
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-lg border ${userData.gender === 'male' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-gray-700 border-gray-200'}`}
+                      onClick={() => handleInputChange('gender', 'male')}
+                    >
+                      Male
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-lg border ${userData.gender === 'female' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-gray-700 border-gray-200'}`}
+                      onClick={() => handleInputChange('gender', 'female')}
+                    >
+                      Female
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-lg border ${userData.gender === 'other' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-gray-700 border-gray-200'}`}
+                      onClick={() => handleInputChange('gender', 'other')}
+                    >
+                      Other
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -166,19 +284,19 @@ const App = () => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Current Fitness Level: {userData.fitnessLevel} h/week
+                    How many hours a week do you want to spend exercising? {userData.fitnessLevel} hours per week
                   </label>
                   <input
                     type="range"
                     min="0"
-                    max="28"
+                    max="14"
                     value={userData.fitnessLevel}
                     onChange={(e) => handleInputChange('fitnessLevel', parseInt(e.target.value))}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                   />
                   <div className="flex justify-between text-xs text-gray-500 mt-1">
                     <span>0 hours</span>
-                    <span>28+ hours</span>
+                    <span>14+ hours</span>
                   </div>
                 </div>
                 
@@ -238,6 +356,7 @@ const App = () => {
             </motion.div>
           )}
 
+          
           {currentStep === 3 && (
             <motion.div
               key="step3"
@@ -253,7 +372,25 @@ const App = () => {
                   These are three routines that align with your chosen path.
                 </p>
               </div>
-
+              {bmi && (
+                <div className="mb-6 p-4 bg-amber-50 rounded-lg text-gray-800">
+                  <div><strong>BMI:</strong> {bmi.toFixed(1)}</div>
+                  <div className="mt-2"><strong>Suggested Daily Calories:</strong></div>
+                  <ul className="list-disc list-inside">
+                    {calorieSuggestions.map((s, idx) => {
+                      let label = s.label;
+                      if(userData.bodyweightUnit === 'kg'){
+                        label = label.replace('lbs', 'kg');
+                      }
+                      return (
+                        <li key={idx}>
+                          {label}: <span className="font-semibold">{s.value} calories/day</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {routineTemplates.map((routine) => (
                   <motion.div
@@ -268,7 +405,6 @@ const App = () => {
                       <h3 className="font-semibold text-lg text-gray-900 mb-2">{routine.name}</h3>
                       <p className="text-gray-600 text-sm mb-2">{routine.description}</p>
                       <div className="flex justify-between text-sm text-gray-600">
-                        <span>{routine.commitment}</span>
                         <span>{routine.duration}</span>
                       </div>
                       <button
@@ -308,6 +444,20 @@ const App = () => {
               transition={{ duration: 0.5 }}
               className="bg-white rounded-2xl shadow-lg p-8"
             >
+              {bmi && (
+                <div className="mb-6 p-4 bg-amber-50 rounded-lg text-gray-800">
+                  <div><strong>BMI:</strong> {bmi.toFixed(1)}</div>
+                  <div className="mt-2"><strong>Suggested Caloric Intake:</strong></div>
+                  <ul className="list-disc list-inside">
+                    {calorieSuggestions.map((s, idx) => (
+                      <li key={idx}>
+                        {s.label.replace('lbs', userData.bodyweightUnit === 'kg' ? 'kg' : 'lbs')}:
+                        <span className="font-semibold"> {s.value} kcal/day</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedRoutine.name}</h2>
                 <p className="text-gray-600 mb-2">{selectedRoutine.description}</p>
