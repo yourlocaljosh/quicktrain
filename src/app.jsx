@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Header from './header';
 import { routineTemplates } from './data/routines';
+import { exerciseMap } from './data/exercises';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -49,13 +50,15 @@ const App = () => {
   };
 
   const fitnessGoals = [
-    { id: 'basic', title: 'Life Fitness', description: 'Increase life expectency, make daily tasks easier, and be fit!' },
-    { id: 'strength', title: 'Strength Training', description: 'Build functional muscle strength' },
-    { id: 'bodybuilding', title: 'Bodybuilding', description: 'Develop muscle mass and definition (hypertrophy)' },
-    { id: 'athletic', title: 'Athletic Training', description: 'Enhance athletic performance including strength & cardio' },
-    { id: 'balanced', title: 'Balanced', description: 'A little bit of everything' },
-    { id: 'weightloss', title: 'Weight Loss', description: 'Lose fat and get leaner fast' }
+    { id: 'bulk', title: 'Weight Gain', description: 'I want to gain weight while exercising.' },
+    { id: 'cut', title: 'Weight Loss', description: 'I want to lose bodyweight while exercising.' },
+    { id: 'maintain', title: 'Maintenance', description: 'I want to maintain my current bodyweight.' },
+    
   ];
+
+  const disclaimers = [
+    { id: 'underweight', text: 'Ease into the workouts, do not push yourself too hard for the first few weeks.'}
+  ]
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -74,7 +77,7 @@ const App = () => {
             >
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Get Started</h2>
-                <p className="text-gray-600">Tell us about yourself to create your personalized routine (Website is incomplete. Expect routines soon)</p>
+                <p className="text-gray-600">Tell us about yourself to get a routine that matches you.</p>
               </div>
               <div className="space-y-6">
                 <div>
@@ -205,8 +208,8 @@ const App = () => {
               className="bg-white rounded-2xl shadow-lg p-8"
             >
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Select Your Goal</h2>
-                <p className="text-gray-600">Choose the fitness path that matches your objectives</p>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">What matches your goal?</h2>
+                <p className="text-gray-600">Choose the path that matches your objectives the closest.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -247,7 +250,7 @@ const App = () => {
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Personalized Routines</h2>
                 <p className="text-gray-600">
-                  Based on your <span className="font-semibold text-amber-600">{selectedGoal}</span> goal, these are the three routines we have for you.
+                  These are three routines that align with your chosen path.
                 </p>
               </div>
 
@@ -270,7 +273,10 @@ const App = () => {
                       </div>
                       <button
                         className="mt-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-200"
-                        onClick={() => setSelectedRoutine(routine)}
+                        onClick={() => {
+                          setCurrentStep(4);
+                          setSelectedRoutine(routine);
+                        }}
                       >
                         View Details
                       </button>
@@ -278,25 +284,6 @@ const App = () => {
                   </motion.div>
                 ))}
               </div>
-
-              {selectedRoutine && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                  <div className="bg-white rounded-xl p-8 max-w-lg w-full shadow-lg relative">
-                    <button
-                      className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-                      onClick={() => setSelectedRoutine(null)}
-                    >
-                      ✕
-                    </button>
-                    <h2 className="text-2xl font-bold mb-4">{selectedRoutine.name}</h2>
-                    <p className="mb-2">{selectedRoutine.description}</p>
-                    <div>
-                      <strong>Frequency:</strong> {selectedRoutine.frequency}<br />
-                      <strong>Split:</strong> {selectedRoutine.split}
-                    </div>
-                  </div>
-                </div>
-              )}
 
               <div className="text-center space-y-4">
                 <button
@@ -308,6 +295,73 @@ const App = () => {
                 <p className="text-gray-500 text-sm">
                   These routines are customized based on your biometrics and fitness goals
                 </p>
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === 4 && selectedRoutine && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg p-8"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedRoutine.name}</h2>
+                <p className="text-gray-600 mb-2">{selectedRoutine.description}</p>
+                <div className="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                  <span className="px-3 py-1 bg-amber-100 rounded-full">{selectedRoutine.frequency}</span>
+                  <span className="px-3 py-1 bg-amber-100 rounded-full">{selectedRoutine.split}</span>
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <h3 className="font-semibold text-lg text-gray-900 mb-4">Routine Overview</h3>
+                <ul className="space-y-4">
+                  {selectedRoutine.workouts.map((workout, idx) => (
+                    <li key={idx} className="border border-gray-200 rounded-lg p-4">
+                      <div className="font-semibold text-amber-600 mb-2">
+                        {typeof workout.day === 'number' ? `Day ${workout.day}` : workout.day}
+                      </div>
+                      <ul className="list-disc list-inside text-gray-700">
+                        {workout.exercises.map((ex, i) => {
+                          const exercise = exerciseMap[ex.exerciseId];
+                          return (
+                            <li key={i}>
+                              <span className="font-medium">{exercise ? exercise.name : ex.exerciseId}</span>
+                              {exercise && exercise.primaryMuscle && (
+                                <span className="ml-2 text-xs text-gray-500">({exercise.primaryMuscle})</span>
+                              )}
+                              {/* Optionally add sets/reps/rest here */}
+                              {ex.sets && (
+                                <span className="ml-2 text-xs text-gray-600">
+                                  — {ex.sets} sets × {ex.reps} reps (Rest: {ex.rest})
+                                </span>
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <button
+                  onClick={() => setCurrentStep(3)}
+                  className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                >
+                  ← Back to routines
+                </button>
+                <button
+                  onClick={resetForm}
+                  className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200"
+                >
+                  Restart
+                </button>
               </div>
             </motion.div>
           )}
