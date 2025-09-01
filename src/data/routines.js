@@ -33,7 +33,7 @@ export const routineTemplates = [
     name: 'Push / Pull / Legs',
     description: 'Focuses every muscle group for maximum gains over 6 days',
     frequency: '6 days/week',
-    split: 'Push/Pull/Legs',
+    split: 'PPLPPL',
     workouts: [
       {
         day: 'Push',
@@ -49,6 +49,27 @@ export const routineTemplates = [
       },
       {
         day: 'Legs',
+        exercises: [
+
+        ]
+      },
+    ]
+  },
+  {
+    id: 'UL',
+    name: 'Upper / Lower',
+    description: 'Isolate upper body muscles, then lower body muscles. Do the UL pair two or three times a week.',
+    frequency: '4-6 days/week',
+    split: 'UL',
+    workouts: [
+      {
+        day: 'Upper',
+        exercises: [
+
+        ]
+      },
+      {
+        day: 'Lower',
         exercises: [
 
         ]
