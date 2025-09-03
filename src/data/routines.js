@@ -156,8 +156,8 @@ export const routineTemplates = [
       {
         day: 'Workout',
         exercises: [
-          { exerciseId: 'pushups', reps: 'Until Failure', rest: '120s' },
-          { exerciseId: 'situps', reps: 'Until Failure', rest: '120s' },
+          { exerciseId: 'push_up', reps: 'Until Failure', rest: '120s' },
+          { exerciseId: 'sit_ups', reps: 'Until Failure', rest: '120s' },
         ]
       },
     ]

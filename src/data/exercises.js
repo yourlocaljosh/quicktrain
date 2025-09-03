@@ -27,6 +27,13 @@ const allExercisesList = [
     favorites: ['chest','upper_chest']
   },
   {
+    id: 'sit_up',
+    name: 'Sit-up',
+    primaryMuscles: ['abs'],
+    equipment: ['None'],
+    description: 'You can\'t go wrong with these. Convenient, reliable.',
+  },
+  {
     id: 'incline_bench_press',
     name: 'Incline Bench Press',
     primaryMuscles: ['upper_chest'],
