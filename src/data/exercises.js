@@ -18,7 +18,7 @@ const allExercisesList = [
     favorites: ['lats']
   },
   {
-    id: 'push-up',
+    id: 'push_up',
     name: 'Push-up',
     primaryMuscles: ['chest'],
     secondaryMuscles: ['triceps','front_delt'],
