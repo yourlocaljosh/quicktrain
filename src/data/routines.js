@@ -129,5 +129,38 @@ export const routineTemplates = [
       },
     ]
   },
+  {
+    id: 'ZZZ',
+    time: 0,
+    name: 'Rest',
+    description: '0 time for fitness? Just rest... 😌',
+    frequency: '24/7',
+    split: 'ZZZ',
+    workouts: [
+      {
+        day: 'Rest',
+        exercises: [
+
+        ]
+      },
+    ]
+  },
+  {
+    id: 'HOME',
+    time: 1,
+    name: 'Bedroom Fitness',
+    description: 'The two most reliable exercises: pushups and situps.',
+    frequency: '1 day/week',
+    split: 'W',
+    workouts: [
+      {
+        day: 'Workout',
+        exercises: [
+          { exerciseId: 'pushups', reps: 'Until Failure', rest: '120s' },
+          { exerciseId: 'situps', reps: 'Until Failure', rest: '120s' },
+        ]
+      },
+    ]
+  },
   // add more
 ];
