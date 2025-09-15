@@ -216,6 +216,31 @@ const allExercisesList = [
     description: 'Straighten out your body and hold. Great for stability too.',
     favorites: ['obliques']
   },
+  {
+    id: 'squat',
+    name: 'Squat',
+    primaryMuscles: ['quads','glutes','calves'],
+    secondaryMuscles: ['hamstrings'],
+    equipment: ['Barbell'],
+    description: 'Controlled descent, rest the barbell on your traps to avoid neck pain.',
+    favorites: ['quads']
+  },
+  {
+    id: 'leg_extension',
+    name: 'Leg Extension',
+    primaryMuscles: ['quads'],
+    equipment: ['Leg Extension Machine'],
+    description: 'Put your back against the seat and steady your position. Don\'t squirm.',
+    favorites: ['quads']
+  },
+  {
+    id: 'leg_curl',
+    name: 'Leg Curl',
+    primaryMuscles: ['hamstrings'],
+    equipment: ['Leg Curl Machine'],
+    description: 'Put your back against the seat and steady your position. Don\'t squirm.',
+    favorites: ['hamstrings']
+  },
 ];
 
 export const exerciseMap = allExercisesList.reduce((map, exercise) => {

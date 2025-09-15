@@ -12,19 +12,22 @@ export const routineTemplates = [
       {
         day: 1,
         exercises: [
-          { exerciseId: 'bench_press', sets: 3, reps: '8-10', rest: '120-240s' },
+          { exerciseId: 'bench_press', sets: 3, reps: '6-8', rest: '120-240s' },
+          { exerciseId: 'leg_curl', sets: 3, reps: '8-10', rest: '120s' },
+          { exerciseId: 'dumbbell_curl', sets: 3, reps: '8-12', rest: '120s' },
+          { exerciseId: '', sets: 3, reps: '8-12', rest: '120s' },
         ]
       },
       {
         day: 2,
         exercises: [
-            //create
+            { exerciseId: 'squat', sets: 3, reps: '6-8', rest: '120-240s' },
         ]
       },
       {
         day: 3,
         exercises: [
-            //create
+            { exerciseId: 'deadlift', sets: 3, reps: '6-8', rest: '120-240s' },
         ]
       }
     ]
@@ -68,7 +71,11 @@ export const routineTemplates = [
       {
         day: 'Push',
         exercises: [
-
+          { exerciseId: 'bench_press', sets: 3, reps: '6-8', rest: '120-240s' },
+          { exerciseId: 'incline_bench_press', sets: 3, reps: '6-8', rest: '120-240s' },
+          { exerciseId: 'overhead_cable_tricep_extension', sets: 3, reps: '6-10', rest: '120s' },
+          { exerciseId: 'cable_lateral_raise', sets: 3, reps: '6-10', rest: '120s' },
+          { exerciseId: 'tricep_pushdown', sets: 3, reps: '6-10', rest: '120s' },
         ]
       },
       {
